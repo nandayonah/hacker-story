@@ -15,7 +15,7 @@ const profile = {
   postsCount: 4,
 };
 
-const list = [
+const stories = [
   {
     title: 'React',
     url: 'https://reactjs.org/',
@@ -46,61 +46,56 @@ export default function App() {
 
         <Search />
 
-        <List />
+        <List list={stories} />
       </div>
     </div>
   );
 }
 
-function Profile() {
-  return (
-    <div className="flex justify-between">
-      <p>
-        Hello, <strong>{getUppercaseWord(profile.name)}</strong>, welcome back.
-      </p>
-      <p className="text-gray-500">
-        Post count: <strong>{profile.postsCount}</strong>
-      </p>
-    </div>
-  );
-}
+const Profile = () => (
+  <div className="flex justify-between">
+    <p>
+      Hello, <strong>{getUppercaseWord(profile.name)}</strong>, welcome back.
+    </p>
+    <p className="text-gray-500">
+      Post count: <strong>{profile.postsCount}</strong>
+    </p>
+  </div>
+);
 
-function Search() {
-  return (
+const Search = () => (
+  <div>
+    <label htmlFor="search">Search: </label>
+    <input className="border-2 px-1" id="search" type="text" />
+  </div>
+);
+
+const List = ({ list }) => (
+  <ul>
+    {list.map((item) => (
+      <Item key={item.objectId} {...item} />
+    ))}
+  </ul>
+);
+
+const Item = ({ title, url, author, num_comments, points }) => (
+  <li className="shadow p-2 mb-2 flex justify-between">
     <div>
-      <label htmlFor="search">Search: </label>
-      <input className="border-2 px-1" id="search" type="text" />
+      <span>
+        <a href={url}>{title}</a>
+      </span>
+      <span className="text-sm text-gray-400 block">{author}</span>
     </div>
-  );
-}
-
-function List() {
-  return (
-    <ul>
-      {list.map((item) => (
-        <li
-          className="shadow p-2 mb-2 flex justify-between"
-          key={item.objectID}
-        >
-          <div>
-            <span>
-              <a href={item.url}>{item.title}</a>
-            </span>
-            <span className="text-sm text-gray-400 block">{item.author}</span>
-          </div>
-          <div className="flex gap-2">
-            <div className="flex items-center gap-1 text-sm">
-              <GoCommentDiscussion /> {item.num_comments}
-            </div>
-            <div className="flex items-center gap-1 text-sm">
-              <GoThumbsup /> {item.points}
-            </div>
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
-}
+    <div className="flex gap-2">
+      <div className="flex items-center gap-1 text-sm">
+        <GoCommentDiscussion /> {num_comments}
+      </div>
+      <div className="flex items-center gap-1 text-sm">
+        <GoThumbsup /> {points}
+      </div>
+    </div>
+  </li>
+);
 
 function MiscComponent() {
   return (
