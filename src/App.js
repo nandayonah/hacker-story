@@ -41,60 +41,78 @@ export default function App() {
     <div className="p-4">
       <h1 className="text-4xl font-medium mb-2">{title}</h1>
 
-      <div className="mb-2">
-        <p>
-          Hello, <strong>{getUppercaseWord(profile.name)}</strong>, welcome
-          back.
-        </p>
-        <p className="text-gray-500">
-          Post count: <strong>{profile.postsCount}</strong>
-        </p>
-      </div>
+      <div className="grid grid-cols-1 gap-2">
+        <Profile />
 
-      <div className="mb-4">
-        <label htmlFor="search">Search: </label>
-        <input className="border-2 px-1" id="search" type="text" />
-      </div>
+        <Search />
 
-      <div className="mb-3">
-        <h2 className="text-2xl font-medium">Recently Posts</h2>
-        <ul>
-          {profile.posts.map((post, idx) => (
-            <li className="shadow p-2 mb-2" key={idx}>
-              {post}
-            </li>
-          ))}
-        </ul>
+        <List />
       </div>
+    </div>
+  );
+}
 
-      <div className="mb-3">
-        <h2 className="text-2xl font-medium">Recently Stories</h2>
-        <ul>
-          {list.map((item) => (
-            <li
-              className="shadow p-2 mb-2 flex justify-between"
-              key={item.objectID}
-            >
-              <div>
-                <span>
-                  <a href={item.url}>{item.title}</a>
-                </span>
-                <span className="text-sm text-gray-400 block">
-                  {item.author}
-                </span>
-              </div>
-              <div className="flex gap-2">
-                <div className="flex items-center gap-1 text-sm">
-                  <GoCommentDiscussion /> {item.num_comments}
-                </div>
-                <div className="flex items-center gap-1 text-sm">
-                  <GoThumbsup /> {item.points}
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+function Profile() {
+  return (
+    <div className="flex justify-between">
+      <p>
+        Hello, <strong>{getUppercaseWord(profile.name)}</strong>, welcome back.
+      </p>
+      <p className="text-gray-500">
+        Post count: <strong>{profile.postsCount}</strong>
+      </p>
+    </div>
+  );
+}
+
+function Search() {
+  return (
+    <div>
+      <label htmlFor="search">Search: </label>
+      <input className="border-2 px-1" id="search" type="text" />
+    </div>
+  );
+}
+
+function List() {
+  return (
+    <ul>
+      {list.map((item) => (
+        <li
+          className="shadow p-2 mb-2 flex justify-between"
+          key={item.objectID}
+        >
+          <div>
+            <span>
+              <a href={item.url}>{item.title}</a>
+            </span>
+            <span className="text-sm text-gray-400 block">{item.author}</span>
+          </div>
+          <div className="flex gap-2">
+            <div className="flex items-center gap-1 text-sm">
+              <GoCommentDiscussion /> {item.num_comments}
+            </div>
+            <div className="flex items-center gap-1 text-sm">
+              <GoThumbsup /> {item.points}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function MiscComponent() {
+  return (
+    <div>
+      <h2 className="text-2xl font-medium">Recently Posts</h2>
+      <ul>
+        {profile.posts.map((post, idx) => (
+          <li className="shadow p-2 mb-2" key={idx}>
+            {post}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
