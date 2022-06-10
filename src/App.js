@@ -63,12 +63,28 @@ const Profile = () => (
   </div>
 );
 
-const Search = () => (
-  <div>
-    <label htmlFor="search">Search: </label>
-    <input className="border-2 px-1" id="search" type="text" />
-  </div>
-);
+const Search = () => {
+  const handleChange = (event) => {
+    console.log(event);
+
+    console.log(event.target.value);
+  };
+
+  const handleBlur = (event) => console.log(event.target.value);
+
+  return (
+    <div>
+      <label htmlFor="search">Search: </label>
+      <input
+        className="border-2 px-1"
+        id="search"
+        type="text"
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
+    </div>
+  );
+};
 
 const List = ({ list }) => (
   <ul>
