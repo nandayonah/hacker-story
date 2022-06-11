@@ -1,5 +1,6 @@
 import React from 'react';
 import { GoCommentDiscussion, GoThumbsup } from 'react-icons/go';
+import CurrencyConverter from './CurrencyConverter';
 
 import './style.css';
 
@@ -47,6 +48,8 @@ export default function App() {
         <Search />
 
         <List list={stories} />
+
+        <CurrencyConverter />
       </div>
     </div>
   );
@@ -55,7 +58,14 @@ export default function App() {
 const Profile = () => (
   <div className="flex justify-between">
     <p>
-      Hello, <strong>{getUppercaseWord(profile.name)}</strong>, welcome back.
+      Hello,
+      <NamePropRender>
+        {(name) => (
+          <span>
+            <strong>{getUppercaseWord(profile.name)}</strong>, welcome back.
+          </span>
+        )}
+      </NamePropRender>
     </p>
     <p className="text-gray-500">
       Post count: <strong>{profile.postsCount}</strong>
@@ -112,6 +122,11 @@ const Item = ({ title, url, author, num_comments, points }) => (
     </div>
   </li>
 );
+
+const NamePropRender = (props) => {
+  const name = 'fadli';
+  return <div>{props.children(name)}</div>;
+};
 
 function MiscComponent() {
   return (
