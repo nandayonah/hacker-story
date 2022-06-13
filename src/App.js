@@ -16,29 +16,39 @@ const profile = {
   postsCount: 4,
 };
 
-const stories = [
-  {
-    title: 'React',
-    url: 'https://reactjs.org/',
-    author: 'Jordan Walke',
-    num_comments: 3,
-    points: 4,
-    objectID: 0,
-  },
-  {
-    title: 'Redux',
-    url: 'https://redux.js.org/',
-    author: 'Dan Abramov, Andrew Clark',
-    num_comments: 2,
-    points: 5,
-    objectID: 1,
-  },
-];
-
 const getUppercaseWord = (word) => word.toUpperCase();
 
 export default function App() {
+  const [searchTerm, setSearchTerm] = React.useState('');
+
+  const stories = [
+    {
+      title: 'React',
+      url: 'https://reactjs.org/',
+      author: 'Jordan Walke',
+      num_comments: 3,
+      points: 4,
+      objectID: 0,
+    },
+    {
+      title: 'Redux',
+      url: 'https://redux.js.org/',
+      author: 'Dan Abramov, Andrew Clark',
+      num_comments: 2,
+      points: 5,
+      objectID: 1,
+    },
+  ];
+
   console.log('renders');
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const searchedStories = stories.filter((story) =>
+    story.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="p-4">
@@ -47,9 +57,9 @@ export default function App() {
       <div className="grid grid-cols-1 gap-2">
         <Profile />
 
-        <Search />
+        <Search onSearch={handleSearch} />
 
-        <List list={stories} />
+        <List list={searchedStories} />
 
         <CurrencyConverter />
       </div>
@@ -75,31 +85,17 @@ const Profile = () => (
   </div>
 );
 
-const Search = () => {
-  const [searchTerm, setSearchTerm] = React.useState('');
-
-  console.log('renders search');
-
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleBlur = (event) => console.log(event.target.value);
-
-  return (
-    <div>
-      <label htmlFor="search">Search: </label>
-      <input
-        className="border-2 px-1"
-        id="search"
-        type="text"
-        value={searchTerm}
-        onChange={handleChange}
-        onBlur={handleBlur}
-      />
-    </div>
-  );
-};
+const Search = (props) => (
+  <div>
+    <label htmlFor="search">Search: </label>
+    <input
+      className="border-2 px-1"
+      id="search"
+      type="text"
+      onChange={props.onSearch}
+    />
+  </div>
+);
 
 const List = ({ list }) => {
   console.log('List renders');
