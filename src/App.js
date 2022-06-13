@@ -19,7 +19,7 @@ const profile = {
 const getUppercaseWord = (word) => word.toUpperCase();
 
 export default function App() {
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchTerm, setSearchTerm] = React.useState('React');
 
   const stories = [
     {
@@ -46,9 +46,7 @@ export default function App() {
     setSearchTerm(event.target.value);
   };
 
-  const searchedStories = stories.filter((story) =>
-    story.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const searchedStories = stories.filter(byQuery(searchTerm));
 
   return (
     <div className="p-4">
@@ -57,7 +55,7 @@ export default function App() {
       <div className="grid grid-cols-1 gap-2">
         <Profile />
 
-        <Search onSearch={handleSearch} />
+        <Search query={searchTerm} onSearch={handleSearch} />
 
         <List list={searchedStories} />
 
@@ -66,6 +64,9 @@ export default function App() {
     </div>
   );
 }
+
+const byQuery = (query) => (item) =>
+  item.title.toLowerCase().includes(query.toLowerCase());
 
 const Profile = () => (
   <div className="flex justify-between">
@@ -92,6 +93,7 @@ const Search = (props) => (
       className="border-2 px-1"
       id="search"
       type="text"
+      value={props.query}
       onChange={props.onSearch}
     />
   </div>
