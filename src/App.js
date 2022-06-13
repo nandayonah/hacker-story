@@ -38,6 +38,8 @@ const stories = [
 const getUppercaseWord = (word) => word.toUpperCase();
 
 export default function App() {
+  console.log('renders');
+
   return (
     <div className="p-4">
       <h1 className="text-4xl font-medium mb-2">{title}</h1>
@@ -74,10 +76,12 @@ const Profile = () => (
 );
 
 const Search = () => {
-  const handleChange = (event) => {
-    console.log(event);
+  const [searchTerm, setSearchTerm] = React.useState('');
 
-    console.log(event.target.value);
+  console.log('renders search');
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
   };
 
   const handleBlur = (event) => console.log(event.target.value);
@@ -89,6 +93,7 @@ const Search = () => {
         className="border-2 px-1"
         id="search"
         type="text"
+        value={searchTerm}
         onChange={handleChange}
         onBlur={handleBlur}
       />
@@ -96,13 +101,17 @@ const Search = () => {
   );
 };
 
-const List = ({ list }) => (
-  <ul>
-    {list.map((item) => (
-      <Item key={item.objectId} {...item} />
-    ))}
-  </ul>
-);
+const List = ({ list }) => {
+  console.log('List renders');
+
+  return (
+    <ul>
+      {list.map((item) => (
+        <Item key={item.objectId} {...item} />
+      ))}
+    </ul>
+  );
+};
 
 const Item = ({ title, url, author, num_comments, points }) => (
   <li className="shadow p-2 mb-2 flex justify-between">
